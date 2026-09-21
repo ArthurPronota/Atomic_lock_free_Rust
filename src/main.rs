@@ -13,7 +13,7 @@ fn main() {
             .map(|_| {
                 thread::spawn(move || {
                     for i in 0..1000 {
-                        CNT.fetch_add(1, Ordering::Release) ;
+                        CNT.fetch_add(i, Ordering::Release) ;
                     }
                 })
             }) 
@@ -23,5 +23,5 @@ fn main() {
         h.join().unwrap() ;
     }
 
-    println!("{}", CNT.load(Ordering::Acquire)) ;   // Out: 4000
+    println!("{}", CNT.load(Ordering::Acquire)) ;   // Out: 1998000
 }
